@@ -1,0 +1,22 @@
+{
+  "name": "slack-ec2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "serverless deploy -s dev",
+    "deploy-prd": "serverless deploy -s prd",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "akihiro.nishiya@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2017": "^6.24.1",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "serverless-webpack": "^5.1.5",
+    "webpack": "^4.12.0"
+  }
+}
