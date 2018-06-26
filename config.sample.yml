@@ -1,3 +1,5 @@
+provider:
+  region: us-east-2
 slack:
   authToken: XXXXXXXXX
   verificationToken: XXXXXXXXX

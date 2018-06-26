@@ -3,7 +3,8 @@ service: slack-ec2
 provider:
   name: aws
   runtime: nodejs6.10
-  region: us-east-2
+  region: ${self:custom.config.${self:provider.stage}.provider.region}
+  stage: ${opt:stage, self:custom.defaultStage}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -34,4 +35,3 @@ functions:
 
 plugins:
   - serverless-webpack
-
