@@ -71,10 +71,22 @@ const handleStatus = async (callback) => {
   }
 };
 
+const findInstance = (instances, name) => {
+  const instance = instances.find(i => i.name == name);
+  if (instance) {
+    return instance;
+  }
+  else {
+    // ignore trailing period (for slack reminder)
+    const n = name.replace(/\.$/ , '');
+    return instances.find(i => i.name == n);
+  }
+};
+
 const handleStart = async (name, callback) => {
   try {
     const instances = await ec2Instances();
-    const instance = instances.find(i => i.name == name);
+    const instance = findInstance(instances, name);
     let message = '';
     if (instance) {
       const result = await ec2().startInstances({ InstanceIds: [instance.instanceId] }).promise();
@@ -92,7 +104,7 @@ const handleStart = async (name, callback) => {
 const handleStop = async (name, callback) => {
   try {
     const instances = await ec2Instances();
-    const instance = instances.find(i => i.name == name);
+    const instance = findInstance(instances, name);
     let message = '';
     if (instance) {
       const result = await ec2().stopInstances({ InstanceIds: [instance.instanceId] }).promise();
