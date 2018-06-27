@@ -6,6 +6,7 @@ const AWS = require('aws-sdk');
 const REGION = process.env.REGION;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 const VERIFICATION_TOKEN = process.env.VERIFICATION_TOKEN;
+const FORCE_INSTANCE = process.env.FORCE_INSTANCE;
 
 const sendMessage = (channel, message) => {
   const option = {
@@ -62,7 +63,14 @@ const ec2Instances = async () => {
 const handleStatus = async (callback) => {
   try {
     const instances = await ec2Instances();
-    const message = instances.map((instance) => {
+    const message = instances.filter((instance) => {
+      if (FORCE_INSTANCE) {
+        return instance.name === FORCE_INSTANCE;
+      }
+      else {
+        return true;
+      }
+    }).map((instance) => {
       return `${instance.name}: ${instance.state}`;
     }).join("\n");
     return callback(null, message);
@@ -72,6 +80,10 @@ const handleStatus = async (callback) => {
 };
 
 const findInstance = (instances, name) => {
+  if (FORCE_INSTANCE) {
+    return instances.find(i => i.name == FORCE_INSTANCE);
+  }
+  if (!name) return;
   const instance = instances.find(i => i.name == name);
   if (instance) {
     return instance;
@@ -124,10 +136,10 @@ const ec2Main = async (text, callback) => {
   if (text.match(/status/)) {
     handleStatus(callback);
   }
-  else if (m = text.match(/start\s(.+)/)) {
+  else if (m = text.match(/start(?:\s(.+))?/)) {
     handleStart(m[1], callback);
   }
-  else if (m = text.match(/stop\s(.+)/)) {
+  else if (m = text.match(/stop(?:\s(.+))?/)) {
     handleStop(m[1], callback);
   }
   else {

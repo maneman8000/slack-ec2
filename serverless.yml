@@ -28,6 +28,7 @@ functions:
       REGION: ${self:provider.region}
       AUTH_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
       VERIFICATION_TOKEN: ${self:custom.config.${self:provider.stage}.slack.verificationToken}
+      FORCE_INSTANCE: ${self:custom.config.${self:provider.stage}.app.forceInstance}
     events:
       - http:
           path: events

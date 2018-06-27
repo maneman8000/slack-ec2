@@ -3,3 +3,5 @@ provider:
 slack:
   authToken: XXXXXXXXX
   verificationToken: XXXXXXXXX
+app:
+  forceInstance: ''
