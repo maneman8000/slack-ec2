@@ -44,11 +44,11 @@ const parseInstanceObj = (data) => {
           return current.Key === 'Name' ? current.Value : prev;
         }, instance.Tags[0].Value);
       }
-      console.log('server name: ', name);
       instances.push({
         instanceId: instance.InstanceId,
         state: instance.State.Name,
-        name : name
+        name : name,
+        publicIpAddress: instance.PublicIpAddress
       });
     });
   });
@@ -71,7 +71,11 @@ const handleStatus = async (callback) => {
         return true;
       }
     }).map((instance) => {
-      return `${instance.name}: ${instance.state}`;
+      let res = `${instance.name}: ${instance.state}`
+      if (instance.publicIpAddress) {
+        res += `: ${instance.publicIpAddress}`;
+      }
+      return res;
     }).join("\n");
     return callback(null, message);
   } catch(e) {
