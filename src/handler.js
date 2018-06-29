@@ -7,8 +7,13 @@ const REGION = process.env.REGION;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 const VERIFICATION_TOKEN = process.env.VERIFICATION_TOKEN;
 const FORCE_INSTANCE = process.env.FORCE_INSTANCE;
-const STARTING_MESSAGES = process.env.STARTING_MESSAGES.split('|');
-const STOPPING_MESSAGES = process.env.STOPPING_MESSAGES.split('|');
+
+const escapeMention = (m) => {
+  return m.replace(/\@/g, '@ ');
+};
+
+const STARTING_MESSAGES = escapeMention(process.env.STARTING_MESSAGES).split('|');
+const STOPPING_MESSAGES = escapeMention(process.env.STOPPING_MESSAGES).split('|');
 
 const sendMessage = (channel, message) => {
   const option = {
