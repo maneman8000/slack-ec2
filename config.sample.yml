@@ -5,3 +5,5 @@ slack:
   verificationToken: XXXXXXXXX
 app:
   forceInstance: ''
+  startingMessages: 'starting...'
+  stoppingMessages: 'stopping...'

@@ -29,6 +29,8 @@ functions:
       AUTH_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
       VERIFICATION_TOKEN: ${self:custom.config.${self:provider.stage}.slack.verificationToken}
       FORCE_INSTANCE: ${self:custom.config.${self:provider.stage}.app.forceInstance}
+      STARTING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.startingMessages}
+      STOPPING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.stoppingMessages}
     events:
       - http:
           path: events

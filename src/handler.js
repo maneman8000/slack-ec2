@@ -7,6 +7,8 @@ const REGION = process.env.REGION;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 const VERIFICATION_TOKEN = process.env.VERIFICATION_TOKEN;
 const FORCE_INSTANCE = process.env.FORCE_INSTANCE;
+const STARTING_MESSAGES = process.env.STARTING_MESSAGES.split('|');
+const STOPPING_MESSAGES = process.env.STOPPING_MESSAGES.split('|');
 
 const sendMessage = (channel, message) => {
   const option = {
@@ -99,6 +101,10 @@ const findInstance = (instances, name) => {
   }
 };
 
+const randomPick = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
 const handleStart = async (name, callback) => {
   try {
     const instances = await ec2Instances();
@@ -106,7 +112,12 @@ const handleStart = async (name, callback) => {
     let message = '';
     if (instance) {
       const result = await ec2().startInstances({ InstanceIds: [instance.instanceId] }).promise();
-      message = JSON.stringify(result);
+      if (result.StartingInstances) {
+        message = randomPick(STARTING_MESSAGES);
+      }
+      else {
+        message = JSON.stringify(result);
+      }
     }
     else {
       message = "can't find instance";
@@ -124,7 +135,12 @@ const handleStop = async (name, callback) => {
     let message = '';
     if (instance) {
       const result = await ec2().stopInstances({ InstanceIds: [instance.instanceId] }).promise();
-      message = JSON.stringify(result);
+      if (result.StoppingInstances) {
+        message = randomPick(STOPPING_MESSAGES);
+      }
+      else {
+        message = JSON.stringify(result);
+      }
     }
     else {
       message = "can't find instance";
