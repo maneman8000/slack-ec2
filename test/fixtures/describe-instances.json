@@ -1,0 +1,152 @@
+{
+  "Reservations": [
+    {
+      "Groups": [],
+      "Instances": [
+        {
+          "AmiLaunchIndex": 0,
+          "ImageId": "ami-88888888",
+          "InstanceId": "i-0000000000000000",
+          "InstanceType": "t2.micro",
+          "KeyName": "ec2-default",
+          "LaunchTime": "2018-07-20T01:42:01.000Z",
+          "Monitoring": {
+            "State": "disabled"
+          },
+          "Placement": {
+            "AvailabilityZone": "us-east-2a",
+            "GroupName": "",
+            "Tenancy": "default"
+          },
+          "PrivateDnsName": "ip-10-0-0-44.us-east-2.compute.internal",
+          "PrivateIpAddress": "10.0.0.44",
+          "ProductCodes": [],
+          "PublicDnsName": "",
+          "PublicIpAddress": "123.123.123.123",
+          "State": {
+            "Code": 80,
+            "Name": "stopped"
+          },
+          "StateTransitionReason": "",
+          "SubnetId": "subnet-11111111",
+          "VpcId": "vpc-11111111",
+          "Architecture": "x86_64",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/sda1",
+              "Ebs": {
+                "AttachTime": "2018-01-13T05:26:39.000Z",
+                "DeleteOnTermination": true,
+                "Status": "attached",
+                "VolumeId": "vol-1111111111111111"
+              }
+            }
+          ],
+          "ClientToken": "",
+          "EbsOptimized": false,
+          "EnaSupport": true,
+          "Hypervisor": "xen",
+          "ElasticGpuAssociations": [],
+          "NetworkInterfaces": [
+            {
+            }
+          ],
+          "RootDeviceName": "/dev/sda1",
+          "RootDeviceType": "ebs",
+          "SecurityGroups": [
+            {
+            }
+          ],
+          "SourceDestCheck": true,
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "instance1"
+            }
+          ],
+          "VirtualizationType": "hvm",
+          "CpuOptions": {
+            "CoreCount": 1,
+            "ThreadsPerCore": 1
+          }
+        }
+      ],
+      "OwnerId": "222222222222",
+      "ReservationId": "r-3333333333333333"
+    },
+    {
+      "Groups": [],
+      "Instances": [
+        {
+          "AmiLaunchIndex": 0,
+          "ImageId": "ami-88888889",
+          "InstanceId": "i-0000000000000001",
+          "InstanceType": "t2.micro",
+          "KeyName": "ec2-default",
+          "LaunchTime": "2018-06-20T05:26:40.000Z",
+          "Monitoring": {
+            "State": "disabled"
+          },
+          "Placement": {
+            "AvailabilityZone": "us-east-2a",
+            "GroupName": "",
+            "Tenancy": "default"
+          },
+          "PrivateDnsName": "ip-10-0-0-44.us-east-2.compute.internal",
+          "PrivateIpAddress": "10.0.0.45",
+          "ProductCodes": [],
+          "PublicDnsName": "",
+          "PublicIpAddress": "123.123.123.124",
+          "State": {
+            "Code": 16,
+            "Name": "running"
+          },
+          "StateTransitionReason": "",
+          "SubnetId": "subnet-11111111",
+          "VpcId": "vpc-11111111",
+          "Architecture": "x86_64",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/sda1",
+              "Ebs": {
+                "AttachTime": "2018-01-13T05:26:39.000Z",
+                "DeleteOnTermination": true,
+                "Status": "attached",
+                "VolumeId": "vol-1111111111111112"
+              }
+            }
+          ],
+          "ClientToken": "",
+          "EbsOptimized": false,
+          "EnaSupport": true,
+          "Hypervisor": "xen",
+          "ElasticGpuAssociations": [],
+          "NetworkInterfaces": [
+            {
+            }
+          ],
+          "RootDeviceName": "/dev/sda1",
+          "RootDeviceType": "ebs",
+          "SecurityGroups": [
+            {
+            }
+          ],
+          "SourceDestCheck": true,
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "instance2"
+            }
+          ],
+          "VirtualizationType": "hvm",
+          "CpuOptions": {
+            "CoreCount": 1,
+            "ThreadsPerCore": 1
+          }
+        }
+      ],
+      "OwnerId": "222222222223",
+      "ReservationId": "r-3333333333333334"
+    }
+  ]
+}

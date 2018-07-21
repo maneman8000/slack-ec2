@@ -2,6 +2,7 @@
 
 const request = require('request-promise-native');
 const AWS = require('aws-sdk');
+const utils = require('./utils');
 
 const REGION = process.env.REGION;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
@@ -41,30 +42,9 @@ const ec2 = () => {
   })();
 };
 
-const parseInstanceObj = (data) => {
-  let instances = [];
-  data.Reservations.forEach(reservation => {
-    reservation.Instances.forEach(instance => {
-      let name = 'unknown server';
-      if (instance.Tags.length > 0) {
-        name = instance.Tags.reduce((prev, current) => {
-          return current.Key === 'Name' ? current.Value : prev;
-        }, instance.Tags[0].Value);
-      }
-      instances.push({
-        instanceId: instance.InstanceId,
-        state: instance.State.Name,
-        name : name,
-        publicIpAddress: instance.PublicIpAddress
-      });
-    });
-  });
-  return instances;
-};
-
 const ec2Instances = async () => {
   const data = await ec2().describeInstances().promise();
-  return parseInstanceObj(data);
+  return utils.parseInstanceObj(data);
 };
 
 const handleStatus = async (callback) => {
@@ -78,7 +58,7 @@ const handleStatus = async (callback) => {
         return true;
       }
     }).map((instance) => {
-      let res = `${instance.name}: ${instance.state}`
+      let res = `${instance.name}: ${instance.state}`;
       if (instance.publicIpAddress) {
         res += `: ${instance.publicIpAddress}`;
       }
