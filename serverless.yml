@@ -18,8 +18,8 @@ custom:
     packager: 'npm'
   defaultStage: dev
   config:
-    dev: ${file(./config/dev/dev.yml)}
-    prd: ${file(./config/prd/prd.yml)}
+    dev: ${file(./config/dev.yml)}
+    prd: ${file(./config/prd.yml)}
 
 functions:
   events:
