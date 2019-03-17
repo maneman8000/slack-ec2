@@ -35,6 +35,19 @@ functions:
       - http:
           path: events
           method: post
+  scheduled:
+    handler: src/handler.scheduled
+    environment:
+      REGION: ${self:provider.region}
+      AUTH_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
+      VERIFICATION_TOKEN: ${self:custom.config.${self:provider.stage}.slack.verificationToken}
+      FORCE_INSTANCE: ${self:custom.config.${self:provider.stage}.app.forceInstance}
+      STARTING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.startingMessages}
+      STOPPING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.stoppingMessages}
+      SCHEDULED_INSTANCE: ${self:custom.config.${self:provider.stage}.app.scheduledInstance}
+      SCHEDULED_MESSAGE_CHANNEL: ${self:custom.config.${self:provider.stage}.app.scheduledMessageChannel}
+    events:
+      - schedule: cron(0 16 * * ? *)
 
 plugins:
   - serverless-webpack

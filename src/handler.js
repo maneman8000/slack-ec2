@@ -8,6 +8,8 @@ const REGION = process.env.REGION;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 const VERIFICATION_TOKEN = process.env.VERIFICATION_TOKEN;
 const FORCE_INSTANCE = process.env.FORCE_INSTANCE;
+const SCHEDULED_INSTANCE = process.env.SCHEDULED_INSTANCE;
+const SCHEDULED_MESSAGE_CHANNEL = process.env.SCHEDULED_MESSAGE_CHANNEL;
 
 const escapeMention = (m) => {
   return m.replace(/\@/g, '@ ');
@@ -179,5 +181,41 @@ module.exports.events = (event, context, callback) => {
   }
   else {
     callback(null, response);
+  }
+};
+
+const checkAndStop = async (name, callback) => {
+  try {
+    const instances = await ec2Instances();
+    const instance = findInstance(instances, name);
+    let message = '';
+    if (instance) {
+      const result = await ec2().stopInstances({ InstanceIds: [instance.instanceId] }).promise();
+      if (result.StoppingInstances) {
+        if (result.StoppingInstances[0].PreviousState.Name === "running") {
+          message = randomPick(STOPPING_MESSAGES);
+        }
+      }
+      else {
+        message = JSON.stringify(result);
+      }
+    }
+    else {
+      message = "can't find instance";
+    }
+    if (message.length > 0) {
+      return callback(null, message);
+    }
+    return;
+  } catch(e) {
+    return callback(null, "error!: " + JSON.stringify(e));
+  }
+};
+
+module.exports.scheduled = (event) => {
+  if (SCHEDULED_INSTANCE) {
+    checkAndStop(SCHEDULED_INSTANCE, (success, message) => {
+      sendMessage(SCHEDULED_MESSAGE_CHANNEL, message);
+    });
   }
 };

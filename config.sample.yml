@@ -7,3 +7,5 @@ app:
   forceInstance: ''
   startingMessages: 'starting...'
   stoppingMessages: 'stopping...'
+  scheduledInstance: ''
+  scheduledMessageChannel: ''
