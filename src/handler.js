@@ -107,7 +107,7 @@ const handleStart = async (name, callback) => {
       }
     }
     else {
-      message = "can't find instance";
+      message = "can't find instance: " + name;
     }
     return callback(null, message);
   } catch(e) {
@@ -130,7 +130,7 @@ const handleStop = async (name, callback) => {
       }
     }
     else {
-      message = "can't find instance";
+      message = "can't find instance: " + name;
     }
     return callback(null, message);
   } catch(e) {
@@ -201,7 +201,7 @@ const checkAndStop = async (name, callback) => {
       }
     }
     else {
-      message = "can't find instance";
+      message = "can't find instance: " + name;
     }
     if (message.length > 0) {
       return callback(null, message);
