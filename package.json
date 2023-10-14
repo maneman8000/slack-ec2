@@ -11,16 +11,11 @@
   "author": "akihiro.nishiya@gmail.com",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk": "^2.278.1",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.4.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-es2017": "^6.24.1",
-    "jest": "^23.4.1",
-    "regenerator-runtime": "^0.12.0",
-    "request": "^2.87.0",
-    "request-promise-native": "^1.0.5",
-    "serverless-webpack": "^5.2.0",
-    "webpack": "^4.12.0"
+    "esbuild": "^0.14.25",
+    "serverless-esbuild": "^1.25.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.427.0",
+    "@slack/web-api": "^6.9.0"
   }
 }

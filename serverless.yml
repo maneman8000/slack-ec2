@@ -1,8 +1,9 @@
 service: slack-ec2
+frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs18.x
   region: ${self:custom.config.${self:provider.stage}.provider.region}
   stage: ${opt:stage, self:custom.defaultStage}
   iamRoleStatements:
@@ -12,10 +13,6 @@ provider:
       Resource: "*"
 
 custom:
-  webpack:
-    webpackConfig: 'webpack.config.js'
-    includeModules:
-    packager: 'npm'
   defaultStage: dev
   config:
     dev: ${file(./config/dev.yml)}
@@ -26,20 +23,17 @@ functions:
     handler: src/handler.events
     environment:
       REGION: ${self:provider.region}
-      AUTH_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
+      SLACK_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
       VERIFICATION_TOKEN: ${self:custom.config.${self:provider.stage}.slack.verificationToken}
       FORCE_INSTANCE: ${self:custom.config.${self:provider.stage}.app.forceInstance}
       STARTING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.startingMessages}
       STOPPING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.stoppingMessages}
-    events:
-      - http:
-          path: events
-          method: post
+    url: true
   scheduled:
     handler: src/handler.scheduled
     environment:
       REGION: ${self:provider.region}
-      AUTH_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
+      SLACK_TOKEN: ${self:custom.config.${self:provider.stage}.slack.authToken}
       VERIFICATION_TOKEN: ${self:custom.config.${self:provider.stage}.slack.verificationToken}
       FORCE_INSTANCE: ${self:custom.config.${self:provider.stage}.app.forceInstance}
       STARTING_MESSAGES: ${self:custom.config.${self:provider.stage}.app.startingMessages}
@@ -50,4 +44,4 @@ functions:
       - schedule: cron(0 16 * * ? *)
 
 plugins:
-  - serverless-webpack
+  - serverless-esbuild
